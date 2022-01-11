@@ -304,8 +304,8 @@ io.on("connection", (socket) => {
     socket.on("play", (data) => {
         console.log(data)
         if (deck.validPlay(gameState, data.cards)) {
-            console.log("new turn")
-            io.to(players[(gameState.turn - 2 === -1 ? 2 : gameState.turn - 2)]).emit("successfulPlay")
+            console.log("new turn");
+            io.to(players[(gameState.turn - 2 === -1 ? 2 : gameState.turn - 2)]).emit("successfulPlay");
             io.emit("newTurn", {
                 turn: gameState.turn,
                 cards: gameState.playedCards.at(-1).cards
