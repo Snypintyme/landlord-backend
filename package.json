@@ -1,0 +1,25 @@
+{
+  "dependencies": {
+    "express": "^4.17.2",
+    "nodemon": "^2.0.15",
+    "socket.io": "^4.4.1"
+  },
+  "scripts": {
+    "start": "nodemon server.js"
+  },
+  "name": "landlord-server",
+  "description": "",
+  "version": "1.0.0",
+  "main": "server.js",
+  "devDependencies": {},
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Snypintyme/Landlord-server.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Snypintyme/Landlord-server/issues"
+  },
+  "homepage": "https://github.com/Snypintyme/Landlord-server#readme"
+}
