@@ -130,7 +130,7 @@ module.exports = class Game {
     }
 
     validPlay(cards) {
-        let lastHandPlayed = this.gameState.playedCards.at(-1);
+        let lastHandPlayed = (this.gameState.newRound ? null : this.gameState.playedCards.at(-1));
         let val = Game.parseSingle(cards);
         if (val) {
             if (this.gameState.newRound || (lastHandPlayed.type === "single" && val > lastHandPlayed.value)) {
