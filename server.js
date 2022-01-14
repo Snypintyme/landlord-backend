@@ -10,6 +10,9 @@ let game = new Game();
 io.on("connection", (socket) => {
     console.log("A user connected: " + socket.id);
     players.push(socket.id);
+    io.emit("waitingForPlayers", {
+        numPlayers: players.length
+    })
 
     // Start game
     if (players.length === 3) {
