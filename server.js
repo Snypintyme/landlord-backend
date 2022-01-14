@@ -67,7 +67,10 @@ io.on("connection", (socket) => {
 
     socket.on("disconnect", () => {
         console.log("A user disconnected: " + socket.id);
-        io.emit("playerLeft", players.findIndex((player) => player === socket.id));
+        io.emit("playerLeft", {
+            numPlayers: players.length
+            //players.findIndex((player) => player === socket.id));
+        })
         players = players.filter((player) => player !== socket.id);
     })
 })
