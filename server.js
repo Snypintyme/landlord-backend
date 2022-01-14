@@ -39,7 +39,7 @@ io.on("connection", (socket) => {
     })
 
     socket.on("pass", () => {
-        if (!game.gameState.newRound) {
+        if (!game.gameState.newRound && players[game.gameState.turn] === socket.id) {
             game.updateTurn();
             io.emit("newTurn", {
                 turn: game.gameState.turn,
