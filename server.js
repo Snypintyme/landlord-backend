@@ -34,7 +34,7 @@ io.on("connection", (socket) => {
             io.to(socket.id).emit("successfulPlay");
             io.emit("newTurn", { // maybe just emit entire game state
                 turn: game.gameState.turn,
-                cards: game.gameState.playedCards[this.gameState.playedCards.length - 1].cards
+                cards: game.gameState.playedCards[game.gameState.playedCards.length - 1].cards
             })
         } else {
             io.to(socket.id).emit("invalidPlay");
@@ -46,7 +46,7 @@ io.on("connection", (socket) => {
             game.updateTurn();
             io.emit("newTurn", {
                 turn: game.gameState.turn,
-                cards: game.gameState.playedCards[this.gameState.playedCards.length - 1].cards
+                cards: game.gameState.playedCards[game.gameState.playedCards.length - 1].cards
             })
         } else {
             io.to(socket.id).emit("invalidPlay");

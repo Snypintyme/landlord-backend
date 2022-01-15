@@ -70,7 +70,7 @@ module.exports = class Game {
                     return false;
                 }
             }
-            return cards[this.gameState.playedCards.length - 1].rank;
+            return cards[cards.length - 1].rank;
         }
         return false;
     }
@@ -130,7 +130,7 @@ module.exports = class Game {
     }
 
     validPlay(cards) {
-        let lastHandPlayed = this.gameState.playedCards[this.gameState.playedCards.length - 1];
+        let lastHandPlayed = (this.gameState.newRound ? null : this.gameState.playedCards[this.gameState.playedCards.length - 1]);
         let val = Game.parseSingle(cards);
         if (val) {
             if (this.gameState.newRound || (lastHandPlayed.type === "single" && val > lastHandPlayed.value)) {
