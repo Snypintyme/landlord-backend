@@ -62,6 +62,7 @@ module.exports = class Game {
     }
 
     static parseStraight(cards, minLength) {
+        console.log(cards, minLength);
         if (cards.length >= minLength) {
             let n = cards[0].rank;
             if (n === 13 && minLength > 1) return false;
