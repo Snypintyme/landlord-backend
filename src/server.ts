@@ -8,7 +8,7 @@ const io = new Server(httpServer, { cors: { origin: '*' } });
 const PORT = process.env.PORT || 3000;
 
 let players: string[] = [];
-const game = new Game(3);
+let game: Game;
 
 io.on('connection', (socket) => {
   console.log('A user connected: ' + socket.id);
@@ -18,6 +18,7 @@ io.on('connection', (socket) => {
   });
 
   if (players.length === 3) {
+    game = new Game(3);
     for (let i = 0; i < 3; ++i) {
       io.to(players[i]).emit('gameStart', {
         playerNum: i,

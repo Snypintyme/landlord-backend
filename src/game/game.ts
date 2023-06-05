@@ -158,8 +158,28 @@ export class Game {
           break;
       }
 
-      if (newPlayedHand.value <= this.gameState.previousHandPlayed.value) {
-        newPlayedHand.type = 'None';
+      // Bombs and Nukes can be played on other combos
+      const bombVal = parseBomb(cards);
+      if (bombVal && this.gameState.previousHandPlayed.type !== 'Nuke') {
+        newPlayedHand.value = bombVal;
+        newPlayedHand.type = 'Bomb';
+        newPlayedHand.length = cards.length;
+      }
+
+      const nukeVal = parseNuke(cards);
+      if (nukeVal) {
+        newPlayedHand.value = nukeVal;
+        newPlayedHand.type = 'Nuke';
+        newPlayedHand.length = cards.length;
+      }
+
+      if (
+        newPlayedHand.type === this.gameState.previousHandPlayed.type &&
+        newPlayedHand.value <= this.gameState.previousHandPlayed.value
+      ) {
+        if (!(newPlayedHand.type === 'Bomb' && cards.length > this.gameState.previousHandPlayed.length)) {
+          newPlayedHand.type = 'None';
+        }
       }
     }
 

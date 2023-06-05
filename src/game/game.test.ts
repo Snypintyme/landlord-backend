@@ -58,7 +58,7 @@ describe('game', () => {
       prevGameState = {
         turn: gameStateOptions.turn ?? game.gameState.turn,
         previousPlayer: gameStateOptions.previousPlayer ?? game.gameState.previousPlayer,
-        newRound: gameStateOptions.newRound ?? game.gameState.newRound,
+        newRound: gameStateOptions.newRound ?? false,
         previousHandPlayed: {
           type: gameStateOptions.type ?? game.gameState.previousHandPlayed.type,
           value: gameStateOptions.value ?? game.gameState.previousHandPlayed.value,
@@ -71,11 +71,12 @@ describe('game', () => {
     };
 
     it('should update the game state when a hand is played', () => {
-      generateGame({ turn: 0 });
+      generateGame({ turn: 0, newRound: true });
 
       const hand: Card[] = [{ rank: Rank['Ace'], suit: Suit['Diamonds'] }];
-      game.playHand(hand);
+      const success = game.playHand(hand);
 
+      expect(success).toBe(true);
       expect(game.gameState).toStrictEqual(
         expect.objectContaining({
           turn: 1,
@@ -91,24 +92,26 @@ describe('game', () => {
       );
     });
 
-    it('should allow an invalid hand to be played', () => {
+    it('should not allow an invalid hand to be played', () => {
       generateGame({});
 
       const hand: Card[] = [
         { rank: Rank['Ace'], suit: Suit['Diamonds'] },
         { rank: Rank['ColourJoker'], suit: Suit['None'] },
       ];
-      game.playHand(hand);
+      const success = game.playHand(hand);
 
+      expect(success).toBe(false);
       expect(game.gameState).toStrictEqual(prevGameState);
     });
 
     it('should allow a hand of higher value to be played', () => {
-      generateGame({ turn: 0, type: 'Single', value: Rank['Three'] });
+      generateGame({ turn: 0, type: 'Single', value: Rank['Three'], length: 1 });
 
       const hand: Card[] = [{ rank: Rank['Ace'], suit: Suit['Diamonds'] }];
-      game.playHand(hand);
+      const success = game.playHand(hand);
 
+      expect(success).toBe(true);
       expect(game.gameState).toStrictEqual(
         expect.objectContaining({
           turn: 1,
@@ -128,8 +131,9 @@ describe('game', () => {
       generateGame({ type: 'Single', value: Rank['Three'] });
 
       const hand: Card[] = [{ rank: Rank['Three'], suit: Suit['Spades'] }];
-      game.playHand(hand);
+      const success = game.playHand(hand);
 
+      expect(success).toBe(false);
       expect(game.gameState).toStrictEqual(prevGameState);
     });
 
@@ -137,8 +141,9 @@ describe('game', () => {
       generateGame({ type: 'Airplane Double Passenger' });
 
       const hand: Card[] = [{ rank: Rank['Ace'], suit: Suit['Diamonds'] }];
-      game.playHand(hand);
+      const success = game.playHand(hand);
 
+      expect(success).toBe(false);
       expect(game.gameState).toStrictEqual(prevGameState);
     });
 
@@ -147,8 +152,9 @@ describe('game', () => {
 
       const card: Card = { rank: Rank['Ace'], suit: Suit['Diamonds'] };
       const hand: Card[] = [card, card, card, card, card];
-      game.playHand(hand);
+      const success = game.playHand(hand);
 
+      expect(success).toBe(true);
       expect(game.gameState).toStrictEqual(
         expect.objectContaining({
           turn: 1,
@@ -169,8 +175,9 @@ describe('game', () => {
 
       const card: Card = { rank: Rank['Three'], suit: Suit['Diamonds'] };
       const hand: Card[] = [card, card, card, card, card];
-      game.playHand(hand);
+      const success = game.playHand(hand);
 
+      expect(success).toBe(true);
       expect(game.gameState).toStrictEqual(
         expect.objectContaining({
           turn: 1,
@@ -193,8 +200,9 @@ describe('game', () => {
         { rank: Rank['ColourJoker'], suit: Suit['None'] },
         { rank: Rank['ColourJoker'], suit: Suit['None'] },
       ];
-      game.playHand(hand);
+      const success = game.playHand(hand);
 
+      expect(success).toBe(true);
       expect(game.gameState).toStrictEqual(
         expect.objectContaining({
           turn: 1,
@@ -217,8 +225,9 @@ describe('game', () => {
         { rank: Rank['BlackJoker'], suit: Suit['None'] },
         { rank: Rank['ColourJoker'], suit: Suit['None'] },
       ];
-      game.playHand(hand);
+      const success = game.playHand(hand);
 
+      expect(success).toBe(true);
       expect(game.gameState).toStrictEqual(
         expect.objectContaining({
           turn: 1,
@@ -237,8 +246,9 @@ describe('game', () => {
     it('should not allow a player to play cards that they do not have', () => {
       generateGame({ turn: 0 });
 
-      game.playHand([game.playerCards[1][1]]);
+      const success = game.playHand([game.playerCards[1][1]]);
 
+      expect(success).toBe(false);
       expect(game.gameState).toStrictEqual(prevGameState);
     });
 
@@ -249,19 +259,21 @@ describe('game', () => {
       const someCard: Card = { rank: Rank['Three'], suit: Suit['Clubs'] };
       const anotherCard: Card = { rank: Rank['Seven'], suit: Suit['Clubs'] };
       game.playerCards[0] = [someCard, someCard, anotherCard, anotherCard, someCard, someCard, anotherCard];
-      game.playHand([someCard, someCard, someCard, someCard]);
+      const success = game.playHand([someCard, someCard, someCard, someCard]);
 
+      expect(success).toBe(true);
       expect(game.playerCards[0].length).toBe(3);
       expect(game.playerCards[0]).toStrictEqual(expect.arrayContaining([anotherCard, anotherCard, anotherCard]));
     });
 
     it('should update the winner when a player has no cards', () => {
-      generateGame({ turn: 0 });
+      generateGame({ turn: 0, newRound: true });
 
       const hand: Card[] = [{ rank: Rank['Ten'], suit: Suit['Clubs'] }];
       game.playerCards[0] = hand;
-      game.playHand(hand);
+      const success = game.playHand(hand);
 
+      expect(success).toBe(true);
       expect(game.winner).toBe(0);
     });
   });
