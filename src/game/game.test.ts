@@ -1,6 +1,6 @@
 import { Card, Rank, Suit } from '../deck';
 import { Game, GameState, PossiblePlayers } from './game';
-import { Hand } from '../util/parse-hand';
+import { Hand } from '../utils/parse-hand';
 
 describe('game', () => {
   it('should be properly initilized', () => {

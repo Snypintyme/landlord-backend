@@ -9,7 +9,7 @@ import {
   parseRollingBucket,
   parseSingle,
   parseStraight,
-} from '../util/parse-hand';
+} from '../utils/parse-hand';
 import { Card, Deck } from '../deck';
 
 export type PossiblePlayers = 2 | 3 | 4 | 5 | 6;
