@@ -25,7 +25,7 @@ describe('game', () => {
     expect(game.deck.cards.length).toBe(108);
   });
 
-  it.each([
+  it.each<[PossiblePlayers, number, number]>([
     [2, 27, 27],
     [3, 17, 20],
     [4, 27, 27],

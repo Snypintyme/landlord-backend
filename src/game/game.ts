@@ -34,8 +34,14 @@ export class Game {
     this.numPlayers = numPlayers;
     this.deck = new Deck(this.isDoubleDeck());
     this.winner = -1;
-    this.generateLandlord();
+    this.landlord = Math.floor(Math.random() * this.numPlayers);
+
+    this.playerCards = [];
+    for (let i = 0; i < this.numPlayers; ++i) {
+      this.playerCards.push([]);
+    }
     this.dealCards();
+    this.landlordCard = this.playerCards[this.landlord][0];
 
     this.gameState = {
       turn: this.landlord,
@@ -54,16 +60,8 @@ export class Game {
     return this.numPlayers > 3 ? true : false;
   }
 
-  generateLandlord() {
-    this.landlord = Math.floor(Math.random() * this.numPlayers);
-  }
-
   dealCards() {
     this.deck.shuffleDeck();
-    this.playerCards = [];
-    for (let i = 0; i < this.numPlayers; ++i) {
-      this.playerCards.push([]);
-    }
 
     let landlordCards: number;
     switch (this.numPlayers) {
@@ -93,8 +91,6 @@ export class Game {
         this.playerCards[j].push(this.deck.cards[i + j]);
       }
     }
-
-    this.landlordCard = this.playerCards[this.landlord][0];
   }
 
   updateTurn() {

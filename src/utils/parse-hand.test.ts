@@ -617,7 +617,7 @@ describe('parse-hand', () => {
     expect(result).toBe(0);
   });
 
-  it.each([
+  it.each<[Card[], HandType, number, number]>([
     [[defaultCard], 'Single', defaultRank, 1],
     [[defaultCard, defaultCard], 'Double', defaultRank, 2],
     [
