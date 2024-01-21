@@ -1,6 +1,6 @@
 import { Card, Rank, Suit } from '../deck';
 import { Game, GameState, PossiblePlayers } from './game';
-import { Hand } from '../util/parse-hand';
+import { Hand } from '../utils/parse-hand';
 
 describe('game', () => {
   it('should be properly initilized', () => {
@@ -25,7 +25,7 @@ describe('game', () => {
     expect(game.deck.cards.length).toBe(108);
   });
 
-  it.each([
+  it.each<[PossiblePlayers, number, number]>([
     [2, 27, 27],
     [3, 17, 20],
     [4, 27, 27],

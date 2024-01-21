@@ -1,24 +1,26 @@
 {
   "devDependencies": {
-    "@babel/preset-env": "7.21.5",
-    "@types/express": "4.17.17",
-    "@types/jest": "29.5.1",
-    "@typescript-eslint/eslint-plugin": "5.59.5",
-    "@typescript-eslint/parser": "5.59.5",
-    "babel-jest": "29.5.0",
-    "eslint": "8.40.0",
-    "jest": "29.5.0",
-    "nodemon": "2.0.22",
-    "ts-jest": "29.1.0",
-    "ts-node": "10.9.1",
-    "typescript": "5.0.4"
+    "@babel/preset-env": "7.23.8",
+    "@flydotio/dockerfile": "^0.5.0",
+    "@tsconfig/recommended": "1.0.3",
+    "@types/express": "4.17.21",
+    "@types/jest": "29.5.11",
+    "@typescript-eslint/eslint-plugin": "6.19.0",
+    "@typescript-eslint/parser": "6.19.0",
+    "babel-jest": "29.7.0",
+    "eslint": "8.56.0",
+    "jest": "29.7.0",
+    "ts-jest": "29.1.1",
+    "ts-node": "10.9.2",
+    "typescript": "5.3.3"
   },
   "dependencies": {
     "express": "4.18.2",
-    "socket.io": "4.6.1"
+    "socket.io": "4.7.4"
   },
   "scripts": {
-    "start": "nodemon src/server.ts",
+    "start": "ts-node src/server.ts",
+    "build": "tsc",
     "test": "jest",
     "lint": "eslint . --ext .ts"
   },
